@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS2GUIDEHUB</title>
+    <style>
+        body {
+            background-color: #151515; /* Темно-сірий колір фону */
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            color: #00FFA2; /* Яскраво-зелений колір тексту */
+            text-align: center;
+            overflow: hidden; /* Заборонити прокрутку */
+            user-select: none; /* Заборонити виділення тексту */
+            position: relative; /* Додали для анімаційних стрічок */
+        }
+
+        .welcome-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            opacity: 0; /* Початково контейнер прихований */
+            animation: fadeIn 2s forwards; /* Анімація появи */
+        }
+
+        .start-button {
+            background-color: #00FFA2; /* Яскраво-зелений колір кнопки */
+            color: #151515; /* Темно-сірий колір тексту кнопки */
+            border: none;
+            padding: 10px 20px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        .neon-line-container {
+            position: relative;
+            margin-top: 10px;
+        }
+
+        .neon-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background-color: #00FFA2; /* Яскраво-зелений колір лінії */
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0;
+            animation: neonLine 2s forwards;
+        }
+
+        @keyframes neonLine {
+            0% {
+                transform: translateX(-100%);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        .fullscreen-hint {
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #151515; /* Темно-сірий колір фону підказки */
+            color: #00FFA2; /* Яскраво-зелений колір тексту підказки */
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 10px;
+            opacity: 0; /* Початково підказка прихована */
+            transition: opacity 0.5s ease;
+        }
+
+        /* Змінюємо кольори великих ліній */
+        body::before,
+        body::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 5px;
+            background-color: #00FFA2; /* Яскраво-зелений колір ліній */
+        }
+
+        body::before {
+            right: 100%;
+        }
+
+        body::after {
+            left: 100%;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome-container">
+        <h1>Вітаємо в Counter-Strike 2: GUIDE!</h1>
+        <div class="neon-line-container">
+            <div class="neon-line"></div>
+        </div>
+        <button class="start-button" onclick="redirectToMainPage()">Почати</button>
+    </div>
+
+    <div class="fullscreen-hint" id="fullscreenHint">Натисніть F11, щоб розгорнути на весь екран</div>
+
+    <script>
+        document.addEventListener("contextmenu", function (e) {
+            e.preventDefault(); // Забороняємо відображення контекстного меню
+        });
+
+        function redirectToMainPage() {
+            const fullscreenHint = document.getElementById("fullscreenHint");
+            fullscreenHint.style.opacity = "0"; // Приховуємо підказку
+
+            // Затримка перед переходом на іншу сторінку
+            setTimeout(() => {
+                // Анімація зникнення елементів
+                document.body.style.opacity = "0";
+                fullscreenHint.style.display = "none";
+
+                // Затримка перед переадресацією
+                setTimeout(() => {
+                    window.location.href = "index.html";
+                }, 500);
+            }, 500);
+        }
+
+        // Відслідковування натискання клавіші F11
+        document.addEventListener("keydown", function (event) {
+            if (event.key === "F11") {
+                hideFullscreenHint(); // Приховуємо підказку при натисканні F11
+            }
+        });
+
+        // Функція для приховання підказки з анімацією
+        function hideFullscreenHint() {
+            const fullscreenHint = document.getElementById("fullscreenHint");
+            fullscreenHint.style.opacity = "0";
+            setTimeout(() => {
+                fullscreenHint.style.display = "none";
+            }, 500); // Після закінчення анімації приховуємо підказку
+        }
+
+        // Показуємо підказку про F11 при завантаженні сторінки з анімацією
+        window.addEventListener("load", function () {
+            const fullscreenHint = document.getElementById("fullscreenHint");
+            fullscreenHint.style.display = "block";
+            setTimeout(() => {
+                fullscreenHint.style.opacity = "1";
+            }, 100); // Затримка перед початком анімації
+        });
+    </script>
+</body>
+</html>
